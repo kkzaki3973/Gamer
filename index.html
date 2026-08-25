@@ -1,557 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wonder Gamer</title>
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+  <meta charset='UTF-8'/>
+  <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <title>Offer</title>
 
-    :root {
-      --bg: #070812;
-      --card: rgba(18, 20, 38, 0.72);
-      --purple: #8b5cf6;
-      --pink: #ec4899;
-      --cyan: #22d3ee;
-      --text: #f8fafc;
-      --muted: #9ca3af;
-    }
-
-    body {
-      font-family: "Poppins", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* Animated background */
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      width: 450px;
-      height: 450px;
-      border-radius: 50%;
-      filter: blur(100px);
-      opacity: .18;
-      z-index: -1;
-    }
-
-    body::before {
-      background: var(--purple);
-      top: -150px;
-      left: -100px;
-    }
-
-    body::after {
-      background: var(--cyan);
-      right: -150px;
-      bottom: -150px;
-    }
-
-    /* Navbar */
-    nav {
-      width: 100%;
-      padding: 22px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: fixed;
-      top: 0;
-      z-index: 100;
-      background: rgba(7, 8, 18, .7);
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-
-    .logo {
-      font-family: "Orbitron", sans-serif;
-      font-size: 1.45rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .logo span {
-      color: var(--pink);
-      text-shadow: 0 0 18px var(--pink);
-    }
-
-    nav ul {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    nav a {
-      color: #cbd5e1;
-      text-decoration: none;
-      font-size: .9rem;
-      transition: .3s;
-    }
-
-    nav a:hover {
-      color: var(--cyan);
-    }
-
-    .nav-btn {
-      padding: 10px 20px;
-      border: 1px solid var(--purple);
-      border-radius: 25px;
-      color: white;
-      text-decoration: none;
-      transition: .3s;
-    }
-
-    .nav-btn:hover {
-      background: var(--purple);
-      box-shadow: 0 0 25px rgba(139,92,246,.5);
-    }
-
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 130px 7% 80px;
-      position: relative;
-    }
-
-    .hero-content {
-      max-width: 900px;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 8px 18px;
-      border: 1px solid rgba(34,211,238,.35);
-      border-radius: 30px;
-      background: rgba(34,211,238,.08);
-      color: var(--cyan);
-      font-size: .8rem;
-      margin-bottom: 25px;
-    }
-
-    h1 {
-      font-family: "Orbitron", sans-serif;
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      line-height: 1;
-      letter-spacing: 3px;
-      margin-bottom: 25px;
-    }
-
-    h1 span {
-      background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
-      -webkit-background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 0 20px rgba(139,92,246,.25));
-    }
-
-    .hero p {
-      max-width: 650px;
-      margin: auto;
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.8;
-    }
-
-    .hero-buttons {
-      margin-top: 35px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 14px 28px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: .3s;
-    }
-
-    .primary {
-      color: white;
-      background: linear-gradient(135deg, var(--purple), var(--pink));
-      box-shadow: 0 0 30px rgba(139,92,246,.3);
-    }
-
-    .primary:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 35px rgba(236,72,153,.35);
-    }
-
-    .secondary {
-      color: white;
-      border: 1px solid rgba(255,255,255,.15);
-      background: rgba(255,255,255,.04);
-    }
-
-    .secondary:hover {
-      background: rgba(255,255,255,.1);
-      transform: translateY(-4px);
-    }
-
-    /* Floating controller */
-    .controller {
-      width: 130px;
-      height: 80px;
-      margin: 65px auto 0;
-      border-radius: 45% 45% 40% 40%;
-      background: linear-gradient(145deg, #25283e, #10121f);
-      box-shadow:
-        0 20px 60px rgba(0,0,0,.5),
-        0 0 40px rgba(139,92,246,.25);
-      position: relative;
-      animation: float 4s ease-in-out infinite;
-    }
-
-    .controller::before {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: var(--cyan);
-      border-radius: 50%;
-      left: 28px;
-      top: 30px;
-      box-shadow: 45px 0 var(--pink);
-    }
-
-    .controller::after {
-      content: "✦";
-      position: absolute;
-      color: white;
-      font-size: 15px;
-      top: 30px;
-      left: 58px;
-    }
-
-    @keyframes float {
-      0%,100% { transform: translateY(0) rotate(0); }
-      50% { transform: translateY(-15px) rotate(2deg); }
-    }
-
-    /* Section */
-    section {
-      padding: 90px 7%;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-
-    .section-title h2 {
-      font-family: "Orbitron", sans-serif;
-      font-size: 2.3rem;
-      margin-bottom: 12px;
-    }
-
-    .section-title p {
-      color: var(--muted);
-    }
-
-    /* Cards */
-    .games {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 25px;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .game-card {
-      position: relative;
-      min-height: 300px;
-      padding: 28px;
-      border-radius: 20px;
-      overflow: hidden;
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,.08);
-      backdrop-filter: blur(15px);
-      transition: .4s;
-    }
-
-    .game-card:hover {
-      transform: translateY(-10px);
-      border-color: rgba(139,92,246,.6);
-      box-shadow: 0 20px 50px rgba(0,0,0,.35);
-    }
-
-    .game-icon {
-      font-size: 3.5rem;
-      margin-bottom: 40px;
-      filter: drop-shadow(0 0 15px rgba(34,211,238,.3));
-    }
-
-    .game-card h3 {
-      font-family: "Orbitron", sans-serif;
-      margin-bottom: 10px;
-    }
-
-    .game-card p {
-      color: var(--muted);
-      font-size: .9rem;
-      line-height: 1.6;
-    }
-
-    .play {
-      position: absolute;
-      right: 25px;
-      bottom: 25px;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--purple), var(--pink));
-      color: white;
-      text-decoration: none;
-    }
-
-    /* Stats */
-    .stats {
-      max-width: 1000px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
-
-    .stat {
-      padding: 30px 15px;
-      text-align: center;
-      border-radius: 18px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.07);
-    }
-
-    .stat strong {
-      display: block;
-      font-family: "Orbitron", sans-serif;
-      font-size: 1.8rem;
-      color: var(--cyan);
-      margin-bottom: 8px;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: .85rem;
-    }
-
-    /* CTA */
-    .cta {
-      max-width: 1000px;
-      margin: auto;
-      padding: 70px 30px;
-      text-align: center;
-      border-radius: 30px;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(139,92,246,.18),
-          rgba(236,72,153,.12)
-        );
-      border: 1px solid rgba(139,92,246,.25);
-    }
-
-    .cta h2 {
-      font-family: "Orbitron", sans-serif;
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-    }
-
-    .cta p {
-      color: var(--muted);
-      margin-bottom: 30px;
-    }
-
-    /* Footer */
-    footer {
-      padding: 35px 7%;
-      border-top: 1px solid rgba(255,255,255,.06);
-      text-align: center;
-      color: #64748b;
-      font-size: .85rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 850px) {
-      nav ul {
-        display: none;
-      }
-
-      .games {
-        grid-template-columns: 1fr;
-        max-width: 500px;
-      }
-
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 500px) {
-      .stats {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      h1 {
-        font-size: 3rem;
-      }
-
-      .cta h2 {
-        font-size: 1.8rem;
-      }
-    }
-  </style>
 </head>
 
 <body>
 
-  <nav>
-    <div class="logo">WONDER<span>GAMER</span></div>
+  <script type='text/javascript'>
+  //<![CDATA[
 
-    <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#games">Games</a></li>
-      <li><a href="#community">Community</a></li>
-      <li><a href="#about">About</a></li>
-    </ul>
+  const API_KEY = "47151|u5qhW6tWVoLeabJ35geBCd9CRO6urZEewrYpvyFe31134733";
+  const API_URL = "https://appsave.store/api/v2";
+  const OFFER_ID = 74662;
 
-    <a href="#games" class="nav-btn">Play Now</a>
-  </nav>
+  async function loadOffer() {
 
-  <main>
+      try {
 
-    <section class="hero" id="home">
-      <div class="hero-content">
+          /*
+           * Get visitor IPv4 from ipify
+           */
+          const ipResponse = await fetch(
+              "https://api4.ipify.org?format=json"
+          );
 
-        <div class="badge">⚡ THE NEXT LEVEL OF GAMING</div>
+          if (!ipResponse.ok) {
+              throw new Error("Could not get IPv4");
+          }
 
-        <h1>
-          WELCOME TO<br>
-          <span>WONDER GAMER</span>
-        </h1>
+          const ipData = await ipResponse.json();
+          const visitorIP = ipData.ip;
 
-        <p>
-          Enter a world where imagination meets competition.
-          Discover epic games, legendary players, and unforgettable
-          gaming experiences.
-        </p>
+          console.log("Visitor IPv4:", visitorIP);
 
-        <div class="hero-buttons">
-          <a href="#games" class="btn primary">🎮 Explore Games</a>
-          <a href="#community" class="btn secondary">Join Community</a>
-        </div>
+          /*
+           * Prepare Offer API request
+           */
+          const params = new URLSearchParams();
 
-        <div class="controller"></div>
+          params.set("ip", visitorIP);
+          params.set("user_agent", navigator.userAgent);
 
-      </div>
-    </section>
+          const response = await fetch(
+              API_URL + "?" + params.toString(),
+              {
+                  method: "GET",
+                  headers: {
+                      "Authorization": "Bearer " + API_KEY
+                  }
+              }
+          );
 
-    <section id="games">
+          if (!response.ok) {
+              throw new Error(
+                  "Offer API HTTP error: " + response.status
+              );
+          }
 
-      <div class="section-title">
-        <h2>FEATURED GAMES</h2>
-        <p>Choose your battlefield and start your adventure.</p>
-      </div>
+          const data = await response.json();
 
-      <div class="games">
+          console.log("Offer API:", data);
 
-        <div class="game-card">
-          <div class="game-icon">⚔️</div>
-          <h3>Shadow Quest</h3>
-          <p>
-            Explore dark worlds, defeat powerful enemies,
-            and become the ultimate warrior.
-          </p>
-          <a href="#" class="play">▶</a>
-        </div>
+          if (!data.success) {
+              throw new Error(
+                  data.error || "Offer API returned an error"
+              );
+          }
 
-        <div class="game-card">
-          <div class="game-icon">🚀</div>
-          <h3>Cyber Rush</h3>
-          <p>
-            Race through futuristic cities in a high-speed
-            battle for digital supremacy.
-          </p>
-          <a href="#" class="play">▶</a>
-        </div>
+          if (!Array.isArray(data.offers)) {
+              throw new Error("No offers returned");
+          }
 
-        <div class="game-card">
-          <div class="game-icon">👾</div>
-          <h3>Galaxy Wars</h3>
-          <p>
-            Build your fleet, conquer galaxies, and dominate
-            the ultimate space strategy arena.
-          </p>
-          <a href="#" class="play">▶</a>
-        </div>
+          /*
+           * Find offer 74662
+           */
+          const offer = data.offers.find(function(item) {
+              return Number(item.offerid) === OFFER_ID;
+          });
 
-      </div>
-    </section>
+          if (!offer) {
+              throw new Error(
+                  "Offer " + OFFER_ID + " not found"
+              );
+          }
 
-    <section id="community">
+          if (!offer.link) {
+              throw new Error(
+                  "Offer link is empty"
+              );
+          }
 
-      <div class="section-title">
-        <h2>THE GAMING UNIVERSE</h2>
-        <p>More players. More adventures. More wins.</p>
-      </div>
+          /*
+           * Direct redirect to offer
+           */
+          window.location.replace(offer.link);
 
-      <div class="stats">
-        <div class="stat">
-          <strong>1.2M+</strong>
-          <span>Players</span>
-        </div>
+      } catch (error) {
 
-        <div class="stat">
-          <strong>250+</strong>
-          <span>Games</span>
-        </div>
+          console.error("Offer Error:", error);
 
-        <div class="stat">
-          <strong>85K+</strong>
-          <span>Daily Matches</span>
-        </div>
+          document.body.innerHTML =
+              "<div style='text-align:center;margin-top:50px;font-family:Arial'>" +
+              "<h3>Offer is not available.</h3>" +
+              "</div>";
 
-        <div class="stat">
-          <strong>24/7</strong>
-          <span>Gaming</span>
-        </div>
-      </div>
+      }
 
-    </section>
+  }
 
-    <section id="about">
+  loadOffer();
 
-      <div class="cta">
-        <h2>READY TO LEVEL UP?</h2>
-
-        <p>
-          Your next gaming adventure is waiting.
-          Join Wonder Gamer and enter the arena.
-        </p>
-
-        <a href="#" class="btn primary">🚀 Start Gaming</a>
-      </div>
-
-    </section>
-
-  </main>
-
-  <footer>
-    © 2026 Wonder Gamer — Game Beyond Limits.
-  </footer>
+  //]]>
+  </script>
 
 </body>
+
 </html>
