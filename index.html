@@ -3,272 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Game Page</title>
+    <title>Game</title>
 
     <style>
         * {
             box-sizing: border-box;
         }
 
-        body {
+        html, body {
             margin: 0;
-            min-height: 100vh;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            background: #0d1117;
+            color: #fff;
             font-family: Arial, sans-serif;
-            background: #10131a;
-            color: white;
         }
 
         .header {
-            background: #171b25;
-            padding: 18px;
+            padding: 20px;
             text-align: center;
+            background: #161b22;
         }
 
-        .header h1 {
-            margin: 0;
-            font-size: 26px;
-        }
-
-        .game-wrapper {
+        .game-container {
             width: 100%;
-            max-width: 900px;
-            margin: 30px auto;
+            max-width: 1000px;
+            margin: 25px auto;
             padding: 15px;
         }
 
         .game-box {
-            position: relative;
             width: 100%;
-            aspect-ratio: 16 / 9;
+            min-height: 500px;
             background: #000;
-            border: 2px solid #303746;
+            border: 2px solid #30363d;
             border-radius: 12px;
-            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .start-screen {
-            text-align: center;
-        }
-
-        .start-screen h2 {
-            margin-bottom: 20px;
-        }
-
-        .play-btn {
+        .play-button {
+            padding: 15px 35px;
             border: 0;
-            padding: 14px 30px;
             border-radius: 8px;
-            background: #00c853;
+            background: #238636;
             color: white;
             font-size: 18px;
-            font-weight: bold;
             cursor: pointer;
         }
 
-        .play-btn:hover {
-            background: #00a844;
-        }
-
-        #game {
-            display: none;
-            width: 100%;
-            height: 100%;
-        }
-
-        .info {
-            margin-top: 20px;
-            padding: 20px;
-            background: #171b25;
-            border-radius: 10px;
-        }
-
-        footer {
-            padding: 25px;
-            text-align: center;
-            color: #888;
+        .play-button:hover {
+            background: #2ea043;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="header">
-        <h1>🎮 My Game</h1>
-    </div>
+<!-- POPCASH: LOAD IMMEDIATELY -->
+<script type="text/javascript">
+    var uid = '278189';
+    var wid = '572399';
+    var pop_fback = 'up';
 
-    <div class="game-wrapper">
+    var pop_tag = document.createElement('script');
+    pop_tag.type = 'text/javascript';
+    pop_tag.src = 'https://cdn.popcash.net/show.js';
 
-        <div class="game-box">
+    document.body.appendChild(pop_tag);
 
-            <div class="start-screen" id="startScreen">
-                <h2>Ready to Play?</h2>
-                <button class="play-btn" onclick="startGame()">
-                    ▶ Play Game
-                </button>
-            </div>
+    pop_tag.onerror = function () {
+        var fallback = document.createElement('script');
+        fallback.type = 'text/javascript';
+        fallback.src = 'https://cdn2.popcash.net/show.js';
 
-            <canvas id="game"></canvas>
+        document.body.appendChild(fallback);
+    };
+</script>
 
+<header class="header">
+    <h1>🎮 My Game</h1>
+</header>
+
+<div class="game-container">
+
+    <div class="game-box" id="gameBox">
+
+        <div id="startScreen">
+            <h2>Ready?</h2>
+
+            <button class="play-button" onclick="startGame()">
+                ▶ PLAY GAME
+            </button>
         </div>
 
-        <div class="info">
-            <h2>Game Instructions</h2>
-            <p>Click the Play button to start the game.</p>
-        </div>
+        <canvas id="gameCanvas" style="display:none;"></canvas>
 
     </div>
 
-    <footer>
-        © 2026 My Game
-    </footer>
+</div>
 
+<script>
+    function startGame() {
 
-    <!-- =========================================
-         POPCASH SCRIPT
-         Runs automatically when the page loads
-         ========================================= -->
+        var screen = document.getElementById("startScreen");
+        var canvas = document.getElementById("gameCanvas");
 
-    <script type="text/javascript">
+        screen.style.display = "none";
+        canvas.style.display = "block";
 
-        var uid = '278189';
-        var wid = '572399';
-        var pop_fback = 'up';
+        canvas.width = document.getElementById("gameBox").clientWidth;
+        canvas.height = 500;
 
-        function loadPopCash() {
-
-            var pop_tag = document.createElement('script');
-
-            pop_tag.src = '//cdn.popcash.net/show.js';
-
-            document.body.appendChild(pop_tag);
-
-            pop_tag.onerror = function() {
-
-                var fallback = document.createElement('script');
-
-                fallback.src = '//cdn2.popcash.net/show.js';
-
-                document.body.appendChild(fallback);
-
-            };
-
-        }
-
-        /*
-         * Run PopCash after the page has loaded.
-         */
-        window.addEventListener('load', function() {
-            loadPopCash();
-        });
-
-    </script>
-
-
-    <!-- =========================================
-         SIMPLE DEMO GAME
-         Replace this with your own game code
-         ========================================= -->
-
-    <script>
-
-        var canvas = document.getElementById("game");
         var ctx = canvas.getContext("2d");
 
-        var player = {
-            x: 100,
-            y: 100,
-            size: 30,
-            speed: 5
-        };
+        ctx.fillStyle = "#111";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        var keys = {};
+        ctx.fillStyle = "#00ff66";
+        ctx.font = "30px Arial";
+        ctx.textAlign = "center";
 
-        document.addEventListener("keydown", function(e) {
-            keys[e.key] = true;
-        });
-
-        document.addEventListener("keyup", function(e) {
-            keys[e.key] = false;
-        });
-
-        function startGame() {
-
-            document.getElementById("startScreen").style.display = "none";
-
-            canvas.style.display = "block";
-
-            canvas.width = canvas.clientWidth;
-            canvas.height = canvas.clientHeight;
-
-            gameLoop();
-        }
-
-        function update() {
-
-            if (keys["ArrowUp"] || keys["w"]) {
-                player.y -= player.speed;
-            }
-
-            if (keys["ArrowDown"] || keys["s"]) {
-                player.y += player.speed;
-            }
-
-            if (keys["ArrowLeft"] || keys["a"]) {
-                player.x -= player.speed;
-            }
-
-            if (keys["ArrowRight"] || keys["d"]) {
-                player.x += player.speed;
-            }
-
-            player.x = Math.max(
-                0,
-                Math.min(canvas.width - player.size, player.x)
-            );
-
-            player.y = Math.max(
-                0,
-                Math.min(canvas.height - player.size, player.y)
-            );
-        }
-
-        function draw() {
-
-            ctx.fillStyle = "#050505";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "#00c853";
-
-            ctx.fillRect(
-                player.x,
-                player.y,
-                player.size,
-                player.size
-            );
-
-            ctx.fillStyle = "#ffffff";
-            ctx.font = "16px Arial";
-
-            ctx.fillText(
-                "Use Arrow Keys or WASD",
-                15,
-                25
-            );
-        }
-
-        function gameLoop() {
-
-            update();
-            draw();
-
-            requestAnimationFrame(gameLoop);
-        }
-
-    </script>
+        ctx.fillText(
+            "GAME STARTED!",
+            canvas.width / 2,
+            canvas.height / 2
+        );
+    }
+</script>
 
 </body>
 </html>
